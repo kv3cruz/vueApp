@@ -18,9 +18,7 @@ Vue.component('product',{
             <p v-if="inventary > 10">in stock</p>
             <p v-else-if="inventary <= 10 && inventary > 0">almost sold!</p>
             <p v-else :class="{outOfStock: !stock}">out stock</p>
-            <ul>
-                <li v-for="detail in details">{{ detail }}</li>
-            </ul>
+            <details-product :details="details"></details-product>
             <div v-for="(variant,index) in variants" 
                     :key="variant.variantId"
                     class="color-box"
@@ -43,10 +41,10 @@ Vue.component('product',{
             product: 'socks',
             branch:'mastery',
             selectedItem: 0,
+            details:['cotton 80%', 'smoothy','neutral gender'],
             stock: false,
             inventary: 0,
-            sale:false,
-            details:['cotton 80%', 'smoothy','neutral gender'],        
+            sale:false,       
             variants:[{variantId:1, variantColor:'green',img:'imges/vmSocks-green-onWhite.jpg'}, {variantId:2, variantColor:'blue',img:'imges/vmSocks-blue-onWhite.jpg'}],
             cart:0
         }
@@ -77,6 +75,18 @@ Vue.component('product',{
 
     }
 
+})
+
+Vue.component('details-product',{
+    props:{
+        details:{
+            type: Array,
+            required: true
+        }
+    },
+    template:`<ul>
+                <li v-for="detail in details">{{ detail }}</li>
+            </ul>`
 })
 var app = new Vue({
     el: '#app',
